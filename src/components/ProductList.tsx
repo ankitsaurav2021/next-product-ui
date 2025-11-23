@@ -34,7 +34,7 @@ export default function ProductList() {
           id={product.id}
           title={product.title}
           description={product.description ?? "No description available"}
-          imageUrl={product.image}
+          imageUrl={`/${product.image}`}
         />
       ))}
     </div>
