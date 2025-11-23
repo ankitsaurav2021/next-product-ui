@@ -6,9 +6,8 @@ import ProductCard from "./ProductCard";
 interface Product {
   id: number;
   title: string;
-  price: number;
-  rating: number;
-  imageUrl: string;
+  description?: string;
+  image: string;
 }
 
 export default function ProductList() {
@@ -26,7 +25,13 @@ export default function ProductList() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard
+          key={product.id}
+          id={product.id}
+          title={product.title}
+          description={product.description ?? "No description available"}
+          imageUrl={product.image}
+        />
       ))}
     </div>
   );
