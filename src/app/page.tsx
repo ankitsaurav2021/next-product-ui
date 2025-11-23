@@ -28,17 +28,30 @@ const products = [
   },
 ];
 
-export default function Home() {
+// src/app/page.tsx
+export default async function HomePage() {
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+
+  const res = await fetch(`${baseUrl}/api/products`);
+  const products = await res.json();
+
   return (
-    <main className="min-h-screen bg-gray-100 p-10">
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 place-items-center">
+    <main>
+      <h1>Products</h1>
+      <div style={{ display: "flex", gap: "1rem" }}>
         {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            title={product.title}
-            description={product.description}
-            imageUrl={product.imageUrl}
-          />
+          <div key={product.id}>
+            <img
+              src={product.image}
+              alt={product.name}
+              width={150}
+              height={150}
+            />
+            <h3>{product.name}</h3>
+            <p>${product.price}</p>
+          </div>
         ))}
       </div>
     </main>
