@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 export type ProductCardProps = {
-  id: number;
+  id?: number;
   title: string;
   description: string;
   imageUrl: string;
