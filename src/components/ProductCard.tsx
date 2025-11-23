@@ -1,16 +1,14 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 
-export type ProductCardProps = {
-  id?: number;
+export interface ProductCardProps {
+  id?: number; // <-- Make optional so Vercel doesn't fail
   title: string;
   description: string;
   imageUrl: string;
-  price?: number;
-  rating?: number;
-};
+}
 
 export default function ProductCard({
   id,
@@ -18,51 +16,29 @@ export default function ProductCard({
   description,
   imageUrl,
 }: ProductCardProps) {
-  // Prevent runtime crashes
-  const safeImage = imageUrl || "/placeholder.png";
-
   return (
-    <div
-      aria-label="product-card"
-      className="w-full max-w-sm p-4 bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer"
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.2 }}
+      className="w-full max-w-sm p-5 bg-white rounded-xl shadow-md hover:shadow-xl transition border border-gray-200"
+      aria-label={`Product card for ${title}`}
     >
-      <motion.div
-        data-testid="animated-card"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="flex flex-col items-center"
+      {/* REPLACED Next.js Image to avoid Vercel test build issues */}
+      <img
+        src={imageUrl}
+        alt={title}
+        className="w-full h-48 object-cover rounded-lg mb-4 shadow-sm"
+      />
+
+      <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+      <p className="text-gray-600 mt-2">{description}</p>
+
+      <button
+        aria-label={`View details of ${title}`}
+        className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition"
       >
-        <Image
-          src={safeImage}
-          alt={title}
-          width={300}
-          height={200}
-          className="rounded-lg object-cover w-full h-48"
-        />
-
-        <h2
-          className="mt-4 text-lg font-semibold text-gray-900 dark:text-gray-100"
-          aria-label="product-title"
-        >
-          {title}
-        </h2>
-
-        <p
-          className="mt-2 text-sm text-gray-600 dark:text-gray-300"
-          aria-label="product-description"
-        >
-          {description}
-        </p>
-
-        {/* CTA Button */}
-        <button
-          aria-label="view-more-button"
-          className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-        >
-          View More
-        </button>
-      </motion.div>
-    </div>
+        View Details
+      </button>
+    </motion.div>
   );
 }
