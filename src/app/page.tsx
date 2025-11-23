@@ -44,13 +44,12 @@ export default async function HomePage() {
         {products.map((product) => (
           <div key={product.id}>
             <img
-              src={product.image}
-              alt={product.name}
+              src={product.imageUrl}
+              alt={product.title}
               width={150}
               height={150}
             />
-            <h3>{product.name}</h3>
-            <p>${product.price}</p>
+            <h3>{product.description}</h3>
           </div>
         ))}
       </div>
