@@ -7,6 +7,8 @@ interface Product {
   id: number;
   title: string;
   description?: string;
+  price: number;
+  rating: number;
   image: string;
 }
 
@@ -15,9 +17,13 @@ export default function ProductList() {
 
   useEffect(() => {
     async function fetchProducts() {
-      const response = await fetch("/api/products");
-      const data = await response.json();
-      setProducts(data);
+      try {
+        const res = await fetch("/api/products");
+        const data = await res.json();
+        setProducts(data);
+      } catch (err) {
+        console.error("API Fetch Failed:", err);
+      }
     }
     fetchProducts();
   }, []);
