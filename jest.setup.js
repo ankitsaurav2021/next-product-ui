@@ -1,18 +1,11 @@
-// jest.setup.js
+// Use CommonJS because Jest setup cannot use ES imports
+require("@testing-library/jest-dom");
+const React = require("react");
 
-// Mock Next.js Image component for Jest
+// Mock Next.js Image
 jest.mock("next/image", () => ({
   __esModule: true,
   default: (props) => {
-    // Render regular <img>, safe for Jest + JS file (no TS errors)
-    return <img {...props} />;
-  },
-}));
-
-// Optional: Mock framer-motion to prevent animation warnings
-jest.mock("framer-motion", () => ({
-  __esModule: true,
-  motion: {
-    div: (props) => <div {...props} />,
+    return React.createElement("img", props);
   },
 }));
